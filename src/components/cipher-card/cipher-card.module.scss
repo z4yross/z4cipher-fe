@@ -1,0 +1,54 @@
+.root {
+}
+.cipher-card {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: start;
+  justify-items: center;
+  justify-content: start;
+  align-content: start;
+  overflow: visible;
+  margin: 0px;
+  padding: 10px;
+  width: 300px;
+  height: 400px;
+  background-color: #e6e6e6;
+  border-radius: 20px;
+  box-shadow: 7.07px 7.07px 10px -5px rgba(0, 0, 0, 0.99);
+  cursor: pointer;
+}
+.cipher-card-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-items: start;
+  justify-content: start;
+  align-content: start;
+  width: 100%;
+  height: 100%;
+  color: rgba(0, 0, 0, 0.7);
+}
+.card-field-title {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 1;
+  font-size: 0.9rem;
+  height: 0;
+  margin: 0px;
+  // text-align: justify;
+  text-align: left;
+}
+.card-field-content {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 1.7;
+  font-size: 1.7rem;
+  margin: 0;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.9);
+}
+.separator {
+  border: 0.5px solid #d9d8d8;
+}

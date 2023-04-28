@@ -1,15 +1,25 @@
 .App {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  // padding: 2rem;
   text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-items: center;
+  align-content: start;
+  justify-content: space-evenly;
+  gap: 30px;
+  height: 90vh;
+  overflow: hidden;
+  min-height: 900px;
 }
 
-.logo {
-  padding: 1.25em;
-  will-change: filter;
-  transition: filter 300ms;
-}
+// .logo {
+//   padding: 1.25em;
+//   will-change: filter;
+//   transition: filter 300ms;
+// }
 
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -48,4 +58,39 @@
 
 .read-the-docs {
   color: #888;
+}
+.section {
+}
+
+*:focus {
+  outline: none;
+  border: none;
+}
+
+select:focus,
+select:hover,
+select:active {
+  outline: none !important;
+  border: none !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #303030;
+  border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

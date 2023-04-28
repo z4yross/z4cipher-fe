@@ -1,0 +1,27 @@
+.root {
+}
+.card-container {
+  flex: 0 1 500px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  position: static;
+  
+  height: 40vh;
+  min-height: 500px;
+
+  align-items: center;
+  justify-items: center;
+  gap: 30px;
+  align-content: space-evenly;
+  justify-content: space-evenly;
+  cursor: inherit;
+}
+.cipher-section {
+  background-color: rgba(49, 48, 48, 0.18);
+  border-radius: 10px;
+  width: 100%;
+  min-width: 690px;
+  max-width: 97vw;
+}

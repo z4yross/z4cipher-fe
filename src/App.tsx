@@ -20,7 +20,11 @@ function App() {
     return (
         <div className={styles.App}>
             <CardContainer algos={algos} setCipher={handleCipher} />
-            <CipherContainer />
+            <CipherContainer
+                cipherName={algos[currentCipher].cipherName}
+                cipherType={algos[currentCipher].type}
+                cipher={algos[currentCipher].cipher}
+            />
         </div>
     );
 }

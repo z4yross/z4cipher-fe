@@ -17,6 +17,7 @@ export interface CipherContainerProps {
  * This component was created using Codux's Default new component template.
  * To create custom component templates, see https://help.codux.com/kb/en/article/configuration-for-cipher-containers-and-templates
  */
+
 export const CipherContainer = ({
     className,
     cipherName,
@@ -25,6 +26,8 @@ export const CipherContainer = ({
 }: CipherContainerProps) => {
     const alphabets = z4cipher.alphabets;
     const [alphabetID, setAlphabetID] = useState(Object.keys(alphabets)[0]);
+
+    // @ts-ignore
     const [alphabet, setAlphabet] = useState(alphabets[Object.keys(alphabets)[0]].getInstance());
 
     const [privateKey, setPrivateKey] = useState(0);
@@ -42,15 +45,17 @@ export const CipherContainer = ({
         const ci = new cipher(publicKey, true, alphabet);
         setCipherText(ci.encrypt(plainText));
     }, [publicKey]);
-
+    
     const handleAlphabetChange = (_alphabet: string, value: string) => {
         const find = Object.keys(alphabets).find((key) => {
             if (key === 'custom') return false;
+            // @ts-ignore
             if (alphabets[key].getInstance().getAlphabet() === value) return true;
         });
 
         if (find !== undefined && _alphabet !== 'custom') {
             setAlphabetID(_alphabet);
+            // @ts-ignore
             setAlphabet(alphabets[find].getInstance());
             return;
         }
@@ -65,11 +70,14 @@ export const CipherContainer = ({
 
             if (value === alphabet.getAlphabet()) return;
 
+            // @ts-ignore
             alphabets.custom.resetInstance();
+            // @ts-ignore
             setAlphabet(alphabets.custom.getInstance(value));
             return;
         }
 
+        // @ts-ignore
         const curr = alphabets[_alphabet];
 
         setAlphabetID(_alphabet);
@@ -81,6 +89,7 @@ export const CipherContainer = ({
 
             if (unique.length !== value.length) return;
 
+            // @ts-ignore
             alphabets.custom.resetInstance();
             setAlphabet(curr.getInstance(value));
             return;
@@ -142,6 +151,7 @@ export const CipherContainer = ({
                             onChange={(e) =>
                                 handleAlphabetChange(
                                     e.target.value,
+                                    // @ts-ignore
                                     alphabets[e.target.value].getInstance().getAlphabet()
                                 )
                             }

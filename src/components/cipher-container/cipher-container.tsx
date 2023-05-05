@@ -11,6 +11,7 @@ export interface CipherContainerProps {
     cipherName: string;
     cipherType: string;
     cipher: any;
+    cipherAlphabet: string[];
 }
 
 /**
@@ -23,6 +24,7 @@ export const CipherContainer = ({
     cipherName,
     cipherType,
     cipher,
+    cipherAlphabet,
 }: CipherContainerProps) => {
     const alphabets = z4cipher.alphabets;
     const [alphabetID, setAlphabetID] = useState(Object.keys(alphabets)[0]);
@@ -31,10 +33,21 @@ export const CipherContainer = ({
     const [alphabet, setAlphabet] = useState(alphabets[Object.keys(alphabets)[0]].getInstance());
 
     const [privateKey, setPrivateKey] = useState(0);
-    const [publicKey, setPublicKey] = useState(0);
+    const [publicKey, setPublicKey] = useState('0');
 
     const [plainText, setPlainText] = useState('');
     const [cipherText, setCipherText] = useState('');
+
+    const [isError, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        handleAlphabetChange(
+            cipherAlphabet[0],
+            // @ts-ignore
+            alphabets[cipherAlphabet[0]].getInstance().getAlphabet()
+        );
+    }, [cipherAlphabet]);
 
     useEffect(() => {
         setPlainText('');
@@ -42,10 +55,9 @@ export const CipherContainer = ({
     }, [alphabetID]);
 
     useEffect(() => {
-        const ci = new cipher(publicKey, true, alphabet);
-        setCipherText(ci.encrypt(plainText));
+        encryptDecrypt(publicKey, plainText, true, true);
     }, [publicKey]);
-    
+
     const handleAlphabetChange = (_alphabet: string, value: string) => {
         const find = Object.keys(alphabets).find((key) => {
             if (key === 'custom') return false;
@@ -102,11 +114,12 @@ export const CipherContainer = ({
         if (cipherName === 'Caesar') {
             // chek if value is a number
             if (isNaN(parseInt(e.target.value))) return;
-            setPublicKey(parseInt(e.target.value));
-            const currentCipher = new cipher(parseInt(e.target.value), true, alphabet);
-            const currentText = plainText;
-            setCipherText(currentCipher.encrypt(plainText));
+            setPublicKey(e.target.value);
+        } else if (cipherName === 'Playfair') {
+            setPublicKey(e.target.value);
         }
+
+        encryptDecrypt(e.target.value, plainText, true, true);
     };
 
     const handlePlainTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -116,9 +129,7 @@ export const CipherContainer = ({
 
         if (!valid) return;
 
-        setPlainText(e.target.value);
-        const currentCipher = new cipher(publicKey, true, alphabet);
-        setCipherText(currentCipher.encrypt(e.target.value));
+        encryptDecrypt(publicKey, e.target.value, true, true);
     };
 
     const handleCipherTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -128,9 +139,30 @@ export const CipherContainer = ({
 
         if (!valid) return;
 
-        setCipherText(e.target.value);
-        const currentCipher = new cipher(publicKey, true, alphabet);
-        setPlainText(currentCipher.decrypt(e.target.value));
+        encryptDecrypt(publicKey, e.target.value, true, false);
+    };
+
+    const encryptDecrypt = (
+        publicKey: string,
+        plainText: string,
+        param: boolean,
+        encrypt: boolean
+    ) => {
+        try {
+            const currentCipher = new cipher(publicKey, param, alphabet);
+            if (encrypt) {
+                setPlainText(plainText);
+                setCipherText(currentCipher.encrypt(plainText));
+            } else {
+                setCipherText(plainText);
+                setPlainText(currentCipher.decrypt(plainText));
+            }
+            setError(false);
+        } catch (e: any) {
+            setError(true);
+            // @ts-ignore
+            setErrorMessage(e.message);
+        }
     };
 
     return (
@@ -157,7 +189,7 @@ export const CipherContainer = ({
                             }
                             value={alphabetID}
                         >
-                            {Object.keys(alphabets).map((key, index) => {
+                            {cipherAlphabet.map((key, index) => {
                                 return (
                                     <option key={index} value={key} disabled={key === 'custom'}>
                                         {key}
@@ -204,6 +236,18 @@ export const CipherContainer = ({
                             onChange={handlePlainTextChange}
                         />
                     </div>
+                    <p className={styles['cipher-field-title']}
+                        style={{
+                            display: isError ? 'block' : 'none',
+                            color: 'rgba(200, 80, 80, 1)',
+                            fontSize: '0.8rem',
+                            fontWeight: 'bold',
+                            margin: '5px',
+                            transition: 'visibility 0.5s ease-in-out',
+                        }}
+                    >
+                        ERROR: {errorMessage}
+                    </p>
                 </div>
             </div>
         </div>

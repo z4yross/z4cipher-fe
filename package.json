@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "classnames": "^2.3.2",
+    "flickity": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-flickity-component": "^4.0.5",
+    "react-slick": "^0.29.0",
+    "swiper": "^9.2.4",
     "vite-plugin-svgr": "^2.4.0",
-    "z4cipher": "^0.1.6"
+    "z4cipher": "^0.2.11"
   },
   "devDependencies": {
     "@types/react": "^18.0.35",

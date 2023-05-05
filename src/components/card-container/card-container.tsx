@@ -34,6 +34,7 @@ export const CardContainer = ({ className, setCipher, algos }: CardContainerProp
         wrapAround: true,
     };
 
+    // @ts-ignore
     const handleSwipe = (e) => {
         setCipher(e.activeIndex);
     }

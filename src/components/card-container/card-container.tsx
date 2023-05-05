@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import styles from './card-container.module.scss';
 import { CipherCard } from '../cipher-card/cipher-card';
 
 import z4ypher from 'z4cipher';
@@ -9,11 +8,16 @@ import { useEffect } from 'react';
 import Flickity from 'react-flickity-component';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCards } from "swiper";
+import { EffectCards, Pagination, Navigation } from 'swiper';
 
 import 'swiper/scss';
-import "swiper/css/effect-cards";
+import 'swiper/scss/effect-cards';
+import 'swiper/scss/pagination';
+import 'swiper/scss/navigation';
 
+import styles from './card-container.module.scss';
+
+import './card-container.module.scss';
 export interface CardContainerProps {
     className?: string;
     setCipher: (key: number) => void;
@@ -37,22 +41,32 @@ export const CardContainer = ({ className, setCipher, algos }: CardContainerProp
     // @ts-ignore
     const handleSwipe = (e) => {
         setCipher(e.activeIndex);
-    }
+    };
+
+    const pagination = {
+        clickable: true,
+    };
 
     return (
         <div className={classNames(className, styles['card-container'], styles['cipher-section'])}>
             <Swiper
-                effect={"cards"}
+                effect={'cards'}
                 grabCursor={true}
-                modules={[EffectCards]}
+                modules={[EffectCards, Pagination, Navigation]}
                 className={classNames(styles['swiper'])}
+                pagination={{
+                    clickable: true,
+                    // dynamicBullets: true,
+                    bulletActiveClass: styles['swiper-pagination-bullet-active'],                    
+                }}
+                loop={true}
                 onSlideChange={(e) => handleSwipe(e)}
             >
                 {algos.map((cipher, index: number) => {
                     return (
                         <SwiperSlide className={classNames(styles['swiper-slide'])} key={index}>
                             <CipherCard
-                                className='cipher-card'
+                                className="cipher-card"
                                 cipherKey={index}
                                 cipherType={cipher.type}
                                 cipherName={cipher.cipherName}

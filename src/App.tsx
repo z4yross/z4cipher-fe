@@ -14,7 +14,7 @@ function App() {
     };
 
     useEffect(() => {
-        console.log(currentCipher);
+        // console.log(currentCipher);
     }, [currentCipher]);
 
     return (
@@ -24,6 +24,8 @@ function App() {
                 cipherName={algos[currentCipher].cipherName}
                 cipherType={algos[currentCipher].type}
                 cipher={algos[currentCipher].cipher}
+                // @ts-ignore
+                cipherAlphabet={algos[currentCipher].allowedAlphabets}
             />
         </div>
     );
